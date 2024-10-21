@@ -190,15 +190,24 @@ if 'Rating' in filtered_df.columns and 'Title' in filtered_df.columns:
 else:
     st.write("The columns 'Rating' or 'Title' are not present in the data.")
 
-# Word cloud for cast excluding Nicolas Cage
-st.subheader("Nicolas Cage worked with the most famous actors in the world (Word Cloud of Cast Members (Excluding Nicolas Cage))")
+# Word cloud of cast names (excluding Nicolas Cage)
+st.subheader("Everybody wants to work with Nicolas Cage")
 if 'Cast' in filtered_df.columns:
-    cast_series = filtered_df['Cast'].str.replace("Nicolas Cage", "").str.cat(sep=', ')
-    wordcloud = WordCloud(width=800, height=400, background_color='white').generate(cast_series)
+    cast_text = ' '.join(filtered_df['Cast'].dropna())
 
-    plt.figure(figsize=(10, 6))
+    cast_text = cast_text.replace("Nicolas Cage", "")
+
+    cast_names = cast_text.split(',')
+
+    cast_names = [name.strip() for name in cast_names]
+
+    name_counts = pd.Series(cast_names).value_counts()
+
+    wordcloud = WordCloud(width=800, height=400, background_color='white').generate_from_frequencies(name_counts)
+
+    plt.figure(figsize=(10, 5))
     plt.imshow(wordcloud, interpolation='bilinear')
-    plt.axis('off')
+    plt.axis('off') 
     st.pyplot(plt)  
 else:
     st.write("The column 'Cast' is not present in the data.")
