@@ -119,7 +119,7 @@ filtered_df = filtered_df.dropna(subset=['Year'])
 filtered_df = filtered_df.sort_values(by='Year', ascending=False)
 
 # Display results
-st.subheader("Films Featuring Nicolas Cage:")
+st.subheader("A quick overview to begin:")
 
 # Menu
 film_titles = filtered_df['Title'].tolist()
@@ -134,7 +134,7 @@ if 'Description' in selected_row and pd.notna(selected_row['Description']):
     st.write(f"**Description:** {selected_row['Description']}")  
 
 # Duration of the films
-st.subheader("Duration of Films by Year of Release")
+st.subheader("Nicolas Cage movies tend to be shorter, what a pity")
 if 'Year' in filtered_df.columns and 'Duration (min)' in filtered_df.columns:
     fig, ax = plt.subplots(figsize=(10, 6))  
     # Check if 'unknown' values need to be handled for duration
@@ -148,7 +148,7 @@ else:
     st.write("The columns 'Year' or 'Duration (min)' are not present in the data.")
 
 # Distribution of genres
-st.subheader("Distribution of Film Genres")
+st.subheader("Nicolas Cage is an active drama queen")
 if 'Genre' in filtered_df.columns:
     genres_split = filtered_df['Genre'].str.split(',').explode().str.strip()  
     genre_counts = genres_split.value_counts().head(10)  
@@ -191,7 +191,7 @@ else:
     st.write("The columns 'Rating' or 'Title' are not present in the data.")
 
 # Word cloud for cast excluding Nicolas Cage
-st.subheader("Word Cloud of Cast Members (Excluding Nicolas Cage)")
+st.subheader("Nicolas Cage worked with the most famous actors in the world (Word Cloud of Cast Members (Excluding Nicolas Cage))")
 if 'Cast' in filtered_df.columns:
     cast_series = filtered_df['Cast'].str.replace("Nicolas Cage", "").str.cat(sep=', ')
     wordcloud = WordCloud(width=800, height=400, background_color='white').generate(cast_series)
